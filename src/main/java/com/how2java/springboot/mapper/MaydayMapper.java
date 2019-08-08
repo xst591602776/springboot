@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component;
 @Mapper
 @Component
 public interface MaydayMapper {
-    @Select("SELECT * FROM `mayday` where title like concat('%', #{title},'%') and content like concat('%', #{content},'%');")
+    @Select("SELECT * FROM `mayday` where title like concat('%', #{title},'%') or content like concat('%', #{content},'%');")
     List<Mayday> findByNameAndPassword(Mayday mayday);
 
     @Select("SELECT * FROM `mayday` where title = #{title} and content = #{content};")
