@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WebSearch_showpage</title>
+  </head>
+
+  <style>
+    body {
+      top: 50px;
+      left: 50px;
+
+      margin: 5%;
+    }
+    a {
+      text-decoration: none;
+    }
+    dd {
+      max-width: 1000px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+
+      white-space: nowrap;
+      /* 换行; */
+    }
+  </style>
+
+  <body>
+    <tr th:each="Mayday:${contents}">
+      <dl>
+        <a th:text="${Mayday.title}" th:href="${'http://' + Mayday.href}"></a>
+      </dl>
+      <dd th:text="${Mayday.content}"></dd>
+    </tr>
+    <br />
+
+    <a href="page-1 "> 上一页 </a>
+
+    <div id="pager"></div>
+    
+    <a href=" page+1"> 下一页 </a>
+
+    <input type="text" id="totalpages" th:value="${totalpages}" />
+
+    <!--<a class="allpage"><b th:text="'共 '+ ${pages.pages}+ ' 页'"></b></a>-->
+
+    <input type="hidden" id="search1" th:value="${search}" />
+    <script>
+      function jump() {
+        window.location.href =
+          "/Mayday/" +
+          document.getElementById("search1").value +
+          "/" +
+          pageBtn[x].innerHTML;
+      }
+
+      window.onload = function(ev) {
+        let pager = document.getElementById("pager");
+        let totalpages = document.getElementById("totalpages").value;
+
+        for (let x in totalpages) {
+          let pageBtn = document.createElement("button");
+          document.class = "page";
+          document.innerHTML = x;
+          pageBtn.onclick = jump;
+          pager.appendChild(pager);
+        }
+      };
+    </script>
+  </body>
+</html>

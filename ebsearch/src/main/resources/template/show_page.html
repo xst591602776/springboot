@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>WebSearch_showpage</title>
+</head>
+
+<style>
+    body {
+        top: 50px;
+        left: 50px;
+
+        margin: 5%;
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+    dd {
+        max-width: 1000px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+        white-space: nowrap;
+        /* 换行; */
+    }
+</style>
+
+<body>
+<tr th:each="Mayday:${contents}">
+    <dl>
+        <a th:text="${Mayday.title}" th:href="${'http://' + Mayday.href}"></a>
+    </dl>
+    <dd th:text="${Mayday.content}"></dd>
+</tr>
+<br/>
+
+<a id="prevPage"> 上一页 </a>
+
+<div id="pager"></div>
+
+<a id="nextPage"> 下一页 </a>
+
+<input type="text" id="totalpages" th:value="${totalpages}"/>
+
+<!--<a class="allpage"><b th:text="'共 '+ ${pages.pages}+ ' 页'"></b></a>-->
+
+<input type="hidden" id="search1" th:value="${search}"/>
+<script>
+    window.onload = function (ev) {
+        let totalpages = parseInt(document.getElementById("totalpages").value);
+        let keyWord = document.getElementById("search1").value;
+
+        console.log(totalpages, keyWord)
+        let page = parseInt(window.location.href
+                .split("/")
+                .reverse()[0]
+        );
+        console.log(window.location.href)
+
+        let prev = document.getElementById("prevPage");
+        let next = document.getElementById("nextPage");
+        console.log(page)
+        if (page === 1) {
+            prev.hidden = true;
+        } else if (page === totalpages) {
+            next.hidden = true;
+        }
+        prev.href = "/Mayday/" + keyWord + "/" + (page - 1);
+        next.href = "/Mayday/" + keyWord + "/" + (page + 1);
+
+        let pager = document.getElementById("pager");
+
+        /*<![CDATA[*/
+        for (let x = 1; x < totalpages+1; x++) {
+            let pageBtn = document.createElement("button");
+            pageBtn.class = "page";
+            pageBtn.innerHTML = x;
+            pageBtn.onclick = jump;
+            pager.appendChild(pageBtn);
+        }
+
+        /*]]>*/
+
+        function jump() {
+            window.location.href = "/Mayday/" + keyWord + "/" + this.innerHTML;
+        }
+    };
+</script>
+</body>
+</html>

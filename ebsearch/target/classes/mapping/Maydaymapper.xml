@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.winter.mapper.UserMapper" >
+    <resultMap id="BaseResultMap" type="com.ebchinatech.search.model.Mayday" >
+        <id column="id" property="Id" jdbcType="INTEGER" />
+        <result column="title" property="title" jdbcType="VARCHAR" />
+        <result column="content" property="content" jdbcType="VARCHAR" />
+        <result column="href" property="href" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+    id, title, content, href
+  </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+        select
+        <include refid="Base_Column_List" />
+        from t_Mayday
+        where d = #{Id,jdbcType=INTEGER}
+    </select>
+
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_mayday
+    where id = #{Id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.ebchinatech.search.model.Mayday" >
+    insert into t_mayday (id, title, content,href)
+    values (#{Id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR},
+      #{href,jdbcType=VARCHAR})
+  </insert>
+
+    <insert id="insertSelective" parameterType="com.ebchinatech.search.model.Mayday" >
+        insert into t_user
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="Id != null" >
+                id,
+            </if>
+            <if test="title != null" >
+                title,
+            </if>
+            <if test="conten != null" >
+                content,
+            </if>
+            <if test="href != null" >
+                href,
+            </if>
+        </trim>
+
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="Id != null" >
+                #{Id,jdbcType=INTEGER},
+            </if>
+            <if test="title != null" >
+                #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="content != null" >
+                #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="href != null" >
+                #{href,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.ebchinatech.search.model.Mayday" >
+        update t_mayday
+        <set >
+            <if test="title != null" >
+                title = #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="content != null" >
+                content = #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="href != null" >
+                href = #{href,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{Id,jdbcType=INTEGER}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.ebchinatech.search.model.Mayday" >
+    update t_mayday
+    set title = #{title,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      href= #{href,jdbcType=VARCHAR}
+    where id = #{Id,jdbcType=INTEGER}
+    </update>
+</mapper>

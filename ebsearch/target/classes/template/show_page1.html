@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WebSearch_showpage</title>
+</head>
+
+
+<style>
+
+    body {
+
+
+        top: 50px;
+        left: 50px;
+
+        margin: 5%;
+
+
+    }
+    a{
+
+        text-decoration: none;
+    }
+    dd{
+        max-width: 1000px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+        white-space: nowrap; #换行
+
+    }
+
+</style>
+
+<body>
+
+
+
+
+    <tr th:each="Mayday:${contents}">
+        <dl ><a th:text="${Mayday.title}" th:href="${'http://' + Mayday.href}"></a></dl>
+        <dd th:text="${Mayday.content}"></dd>
+    </tr>
+<br>
+    </br>
+
+    <a href="page-1 "> 上一页 </a>
+
+    <button class="page">1</button>
+
+    <button class="page">2</button>
+
+    <button class="page"> 3 </button>
+
+    <a href=" page+1"> 下一页 </a>
+
+    <input  type="text"   th:value="${totalpages}"/>
+
+    <!--<a class="allpage"><b th:text="'共 '+ ${pages.pages}+ ' 页'"></b></a>-->
+
+    <input type="hidden" id="search1" th:value="${search}"/>
+<script>
+    window.onload = function (ev) {
+        let pageBtn = document.getElementsByClassName("page")
+        for (let x in pageBtn){
+            pageBtn[x].onclick = function () {
+                window.location.href ='/Mayday/'+ document.getElementById("search1").value + '/' + pageBtn[x].innerHTML
+            }
+        }
+    }
+</script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
